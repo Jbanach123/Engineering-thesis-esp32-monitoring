@@ -46,7 +46,7 @@ def send_motion_sms(message, notif_log):
     except Exception as e:
         notif_log.error(f"SMS send failed: {e}")
 
-# --- Wysyłanie powiadomień ---
+# --- Send notification ---
 def send_motion_notification(cam_id, notif_type, notif_log):
     now = time.time()
     cooldown_seconds = NOTIFY_COOLDOWN_MINUTES * 60
@@ -72,3 +72,4 @@ def send_motion_notification(cam_id, notif_type, notif_log):
     if notif_type in ("sms", "E-mail & SMS"):
         notif_log.info(f"Sending SMS for {cam_id}")
         send_motion_sms(message, notif_log)
+
