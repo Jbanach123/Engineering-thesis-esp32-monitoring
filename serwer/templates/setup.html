@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Konfiguracja systemu monitoringu</title>
+  <style>
+    body { font-family: Arial; background:#111; color:#eee; text-align:center; }
+    .cam-box { background:#222; margin:10px auto; padding:10px; width:300px; border-radius:8px; }
+    button { padding:10px 25px; border:none; border-radius:5px; background:#28a745; color:white; font-size:16px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>Wstępna konfiguracja systemu</h1>
+  <form method="POST">
+    <h3>Wybierz kamery:</h3>
+    {% for name, url in cameras.items() %}
+      <div class="cam-box">
+        <label>
+          <input type="checkbox" name="cameras" value="{{ name }}"> {{ name }} ({{ url }})
+        </label>
+      </div>
+    {% endfor %}
+
+    <h3>Powiadomienia o ruchu:</h3>
+    <label><input type="radio" name="notification" value="none" checked> Brak</label><br>
+    <label><input type="radio" name="notification" value="email"> E-mail</label><br>
+    <label><input type="radio" name="notification" value="sms"> SMS</label><br>
+    <label><input type="radio" name="notification" value="E-mail & SMS"> E-mail & SMS</label><br><br>
+
+    <button type="submit">Zapisz konfigurację</button>
+  </form>
+</body>
+</html>

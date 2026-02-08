@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel kamer ESP32</title>
+  <style>
+    body { font-family: Arial; background:#111; color:#eee; }
+    .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .cam { background:#222; border-radius:10px; padding:10px; text-align:center; display: flex; justify-content: center; }
+    img { width: 480px; height: 360px; border-radius:8px; object-fit:cover; }
+    .bar { text-align:center; margin-bottom:20px; }
+    .cam-box { display: flex; flex-direction: column; align-items: center; }
+    .cam-title { margin: 0 0 8px; text-align: center; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+  <h1>Panel kamer ESP32</h1>
+  <p>Tryb powiadomień: <b>{{ notif }}</b></p>
+  <a href="/setup">
+    <button style="
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+    "
+    onmouseover="this.style.backgroundColor='#0056b3'"
+    onmouseout="this.style.backgroundColor='#007bff'">
+      ⚙️ Przejdź do konfiguracji
+    </button>
+  </a>
+</div>
+  <div class="grid">
+    {% for name in selected_cams %}
+      <div class="cam-box">
+        <h3 class="cam-title">{{ name }}</h3>
+        <div class="cam">
+          <img src="/video/{{ name }}" alt="{{ name }}">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <script>
+  const imgs = document.querySelectorAll("img");
+  imgs.forEach(img => {
+    setInterval(() => {
+      if (img.complete && img.naturalWidth === 0) {
+        console.log("Reconnecting stream...");
+        const src = img.src;
+        img.src = "";
+        setTimeout(() => { img.src = src + "?t=" + Date.now(); }, 500);
+      }
+    }, 5000);
+  });
+</script>
+</body>
+</html>
