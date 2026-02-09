@@ -3,3 +3,4 @@ Engineering thesis project focused on designing and implementing a multipoint mo
 ![Hardware connection diagram](Hardware.png)
 
 ![System overview](Diagram.png)
+
